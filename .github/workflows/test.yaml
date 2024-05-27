@@ -23,11 +23,9 @@ jobs:
     - name: Store new result
       uses: benchmark-action/github-action-benchmark@v1
       with:
-        name: test-benchmark ${{matrix.sycl_bench_program}} benchmark
         tool: customSmallerIsBetter
         output-file-path: output.json
         external-data-json-path: ./cache/benchmark-data.json
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        comment-on-alert: true
         summary-always: true
-	comment-always: true
+        comment-always: true
