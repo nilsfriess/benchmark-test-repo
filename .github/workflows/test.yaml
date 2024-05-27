@@ -1,9 +1,7 @@
 name: Benchmark
 
 on:
-  pull_request:
-    types:
-      - labeled
+  pull_request
 
 jobs:
   run-benchmark:
