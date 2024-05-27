@@ -1,0 +1,33 @@
+name: Benchmark
+
+on:
+  pull_request:
+    types:
+      - labeled
+
+jobs:
+  run-benchmark:
+    if: ${{ github.event.label.name == 'benchmark' }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4      
+    - name: Run benchmark
+      run: |
+        python3 gen_random_result.py | tee ${GITHUB_WORKSPACE}/output.json
+    - name: Download previous benchmark data
+      uses: actions/cache@v4
+      with:
+        path: ./cache
+        key: ${{ runner.os }}-benchmark
+
+    - name: Store new result
+      uses: benchmark-action/github-action-benchmark@v1
+      with:
+        name: test-benchmark ${{matrix.sycl_bench_program}} benchmark
+        tool: customSmallerIsBetter
+        output-file-path: output.json
+        external-data-json-path: ./cache/benchmark-data.json
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        comment-on-alert: true
+        summary-always: true
+	comment-always: true
