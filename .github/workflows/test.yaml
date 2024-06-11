@@ -1,11 +1,12 @@
 name: Benchmark
 
 on:
-  pull_request
+  issue_comment:
+    types: [created, edited, deleted]
 
 jobs:
   run-benchmark:
-    if: ${{ github.event.label.name == 'benchmark' }}
+    if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/benchmark')
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4      
@@ -28,4 +29,4 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         comment-on-alert: true
         summary-always: true
-	comment-always: true
+        comment-always: true
