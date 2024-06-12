@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: write
+  deployments: write
 
 jobs:
   run-benchmark:
