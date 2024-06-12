@@ -4,15 +4,11 @@ on:
   pull_request:
     types: [opened,edited]
 
-
-permissions:
-  contents: write
-  deployments: write
-
 jobs:
   run-benchmark:
     # if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/benchmark')
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
     - uses: actions/checkout@v4      
     - name: Run benchmark
