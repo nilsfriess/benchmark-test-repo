@@ -1,7 +1,8 @@
 name: Benchmark test
 
 on:
-  pull_request
+  pull_request:
+    types: [opened,edited]
 
 permissions:
   contents: write
@@ -9,7 +10,7 @@ permissions:
 
 jobs:
   run-benchmark:
-    #if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/benchmark')
+    # if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/benchmark')
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4      
