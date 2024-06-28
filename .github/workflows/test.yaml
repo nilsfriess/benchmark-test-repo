@@ -6,7 +6,6 @@ on:
 
 jobs:
   run-benchmark:
-    needs: [check-comments]
     runs-on: ubuntu-latest
     if: contains(github.event.pull_request.labels.*.name, 'benchmark')
     permissions: write-all
