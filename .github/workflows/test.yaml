@@ -5,12 +5,22 @@ on:
     types: [opened,edited]
 
 jobs:
-  run-benchmark:
-    # if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/benchmark')
+  check-comments:
     runs-on: ubuntu-latest
+    steps:
+    - name: Check for "/run-benchmark" comment
+      run: |
+        set +e
+        bash check-comments.sh ${{github.event.number}}
+        exitcode="$?"
+        echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
+  run-benchmark:
+    needs: [check-comments]
+    runs-on: ubuntu-latest
+    if: needs.check-comments.outputs.exitcode == 0
     permissions: write-all
     steps:
-    - uses: actions/checkout@v4      
+    - uses: actions/checkout@v4
     - name: Run benchmark
       run: |
         python3 gen_random_result.py | tee ${GITHUB_WORKSPACE}/output.json
