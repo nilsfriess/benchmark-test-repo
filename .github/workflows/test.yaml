@@ -2,7 +2,7 @@ name: Benchmark test
 
 on:
   pull_request:
-    types: [opened,edited,sychnronized,labeled]
+    types: [opened,edited,sychnronize,labeled]
 
 jobs:
   run-benchmark:
